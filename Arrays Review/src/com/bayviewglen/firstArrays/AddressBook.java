@@ -3,10 +3,11 @@ package com.bayviewglen.firstArrays;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.LinkedList;
 
 public class AddressBook {
 
-	Contact[] contacts = new Contact[20];
+	LinkedList<Contact> contacts= new LinkedList<Contact>(); 
 	int numContacts = 0;
 	public static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
@@ -14,11 +15,12 @@ public class AddressBook {
 		System.out.println("Enter Full Name superatred by a space");
 		String name = br.readLine();
 		String[] split = name.split(" ");
-		contacts[numContacts] = new Contact();
-		contacts[numContacts].setFirstName(split[0]);
-		contacts[numContacts].setLastName(split[1]);
+		
+		String f = split[0];
+		String l =split[1];
 		System.out.println("Enter phone number");
-		contacts[numContacts].setPhone(br.readLine());
+		String p = br.readLine();
+		contacts.add(new Contact(f,l,p));
 		numContacts++;
 		System.out.println("Contact added");
 		System.out.println("*************************************");
@@ -28,10 +30,10 @@ public class AddressBook {
 		System.out.println("Enter last name of the contact you want");
 		String searchName = br.readLine();
 		boolean b1 = false;
-		for (int i = 0; i < 20; i++) {
+		for (int i = 0; i < contacts.size(); i++) {
 			try {
-				if (contacts[i].getLastName().equals(searchName)) {
-					System.out.println(contacts[i].toString() + "\n");
+				if (contacts.get(i).getLastName().equals(searchName)) {
+					System.out.println(contacts.get(i).toString() + "\n");
 					b1 = true;
 				}
 			} catch (NullPointerException e) {
@@ -43,18 +45,20 @@ public class AddressBook {
 		if (!b1) {
 			System.out.println("no contacts with that name");
 		}
+		System.out.println("*************************************");
 
 	}
 
 	public void displayContacts() {
 		// TODO Auto-generated method stub
-		for (int i = 0; i < 20; i++) {
+		for (int i = 0; i < contacts.size(); i++) {
 			try {
-				System.out.println(contacts[i].toString() + "\n");
+				System.out.println(contacts.get(i).toString() + "\n");
 			} catch (NullPointerException e) {
 
 			}
 		}
+		System.out.println("*************************************");
 
 	}
 
@@ -63,13 +67,13 @@ public class AddressBook {
 		String name = br.readLine();
 		String[] split = name.split(" ");
 		boolean b1 = false;
-		for (int i = 0; i < 20; i++) {
+		for (int i = 0; i < contacts.size(); i++) {
 			try {
 				
-				if (contacts[i].getFirstName().equals(split[0]) && contacts[i].getLastName().equals(split[1])) {
+				if (contacts.get(i).getFirstName().equals(split[0]) && contacts.get(i).getLastName().equals(split[1])) {
 					b1 = true;
-					contacts[i] = null;
-					
+					contacts.remove(i);
+						
 
 				}
 
@@ -82,6 +86,8 @@ public class AddressBook {
 		} else {
 			System.out.println("enter a real person");
 		}
+		System.out.println("*************************************");
 	}
+	
 
 }
