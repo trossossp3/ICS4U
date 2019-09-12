@@ -7,7 +7,7 @@ import java.util.LinkedList;
 
 public class AddressBook {
 
-	LinkedList<Contact> contacts= new LinkedList<Contact>(); 
+	ContactList contacts = new ContactList();
 	int numContacts = 0;
 	public static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
@@ -20,7 +20,7 @@ public class AddressBook {
 		String l =split[1];
 		System.out.println("Enter phone number");
 		String p = br.readLine();
-		contacts.add(new Contact(f,l,p));
+		contacts.addContact(new Contact(f,l,p));
 		numContacts++;
 		System.out.println("Contact added");
 		System.out.println("*************************************");
@@ -30,7 +30,7 @@ public class AddressBook {
 		System.out.println("Enter last name of the contact you want");
 		String searchName = br.readLine();
 		boolean b1 = false;
-		for (int i = 0; i < contacts.size(); i++) {
+		for (int i = 0; i < numContacts; i++) {
 			try {
 				if (contacts.get(i).getLastName().equals(searchName)) {
 					System.out.println(contacts.get(i).toString() + "\n");
@@ -51,7 +51,7 @@ public class AddressBook {
 
 	public void displayContacts() {
 		// TODO Auto-generated method stub
-		for (int i = 0; i < contacts.size(); i++) {
+		for (int i = 0; i < numContacts; i++) {
 			try {
 				System.out.println(contacts.get(i).toString() + "\n");
 			} catch (NullPointerException e) {
@@ -67,7 +67,7 @@ public class AddressBook {
 		String name = br.readLine();
 		String[] split = name.split(" ");
 		boolean b1 = false;
-		for (int i = 0; i < contacts.size(); i++) {
+		for (int i = 0; i < numContacts; i++) {
 			try {
 				
 				if (contacts.get(i).getFirstName().equals(split[0]) && contacts.get(i).getLastName().equals(split[1])) {

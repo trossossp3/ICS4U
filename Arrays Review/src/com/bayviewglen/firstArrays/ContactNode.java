@@ -4,10 +4,6 @@ public class ContactNode {
 	private Contact data;
 	private ContactNode link;
 	
-	public ContactNode(Contact data, ContactNode link) {
-		
-	}
-
 	public Contact getData() {
 		return data;
 	}
@@ -24,4 +20,10 @@ public class ContactNode {
 		this.link = link;
 	}
 
+	public ContactNode(Contact data, ContactNode link) {
+		this.data = data;
+		this.link = link;
+	}
+	
+	
 }

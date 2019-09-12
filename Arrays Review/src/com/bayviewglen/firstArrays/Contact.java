@@ -26,7 +26,9 @@ public class Contact {
 	
 	public String getLastName() {
 		return lastName;
-	}	
+	}
+	
+	
 
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
@@ -37,9 +39,7 @@ public class Contact {
 	public void setPhone(String phone) {
 		this.phone = phone;
 	}
-	public String toString() {
-		String temp = firstName + " " + lastName + "\n" + "phone NUmber: "+ phone;
-		return temp;
-	}
+	
 	
 }
+
