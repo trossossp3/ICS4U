@@ -26,7 +26,7 @@ public class AddressBookDriver {
 		}else if(option == 2) {
 			contacts.displayContact();
 		}else if(option ==3) {
-			contacts.displayContacts();
+			//contacts.displayContacts();
 		}else {
 			contacts.destroy();
 			
