@@ -1,4 +1,4 @@
-package com.bayviewglen.stackQueue;
+package com.bayviewglen.nQueens;
 public class IntArrayStack implements Stack {
 
 	private int[] arr = new int[100];
