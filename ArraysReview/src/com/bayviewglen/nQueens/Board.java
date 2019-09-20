@@ -9,8 +9,8 @@ package com.bayviewglen.nQueens;
  */
 
 public class Board {
-	private Queen[] queens;
-	private int numQueens;
+	private Stack queens;
+	
 	private int n;
 
 	/**
@@ -19,24 +19,30 @@ public class Board {
 	 */
 	public Board(int n) {
 		this.n = n;
-		numQueens = 0;
-		queens = new Queen[n];
+
+		queens = new Stack(n);
 	}
 
 	/**
 	 * This is the driving method that will complete the n queens problem
 	 */
 	public void doIt() {
-		while (numQueens > -1 && numQueens < n) {
+		while (queens.numQueens() > -1 && queens.numQueens() < n) {
 			if (!place()) {
-				if (!pop()) {
-					break;
+				try {
+					while (!replace())
+						queens.pop();
 
+				} catch (Exception ex) {
+					break;
 				}
 
 			}
+
 		}
-		if (numQueens > 0) {
+		if (queens.numQueens() > 0)
+
+		{
 			printBoard();
 		} else {
 			System.out.println("No solutions at n = " + n);
@@ -69,12 +75,21 @@ public class Board {
 	 * @return true if there is a queen at (row,col) and false otherwise
 	 */
 	private boolean checkPosition(int row, int col) {
-		for (int i = 0; i < numQueens; i++) {
-			if (queens[i].getRow() == row && queens[i].getCol() == col) {
-				return true;
+		Stack temp = new Stack(n);
+		boolean flag = false;
+		while (queens.numQueens() > 0) {
+			temp.push(queens.pop());
+
+			if (temp.peek().getRow() == row && temp.peek().getCol() == col) {
+				flag = true;;
+				break;
+
 			}
 		}
-		return false;
+		while(temp.numQueens()>0) {
+			queens.push(temp.pop());
+		}
+		return flag;
 	}
 
 	/**
@@ -83,20 +98,32 @@ public class Board {
 	 * @return a boolean true if places false otherwise
 	 */
 	public boolean place() {
-		Queen cur;
-		try {
-			cur = new Queen(peek().getRow() + 1, numQueens); // place a queen one row above last queen placed
+		Queen cur = new Queen(0, queens.numQueens());
 
-		} catch (Exception ex) {
-			cur = new Queen(0, numQueens); // if there is no queens placed place one in the first row
-		}
 		boolean placed = false;
 		while (!placed && cur.getRow() < n) {
 			if (canPlace(cur)) {
-				push(cur);
+				queens.push(cur);
 				return true;
 			}
-			cur = new Queen(cur.getRow() + 1, numQueens);
+			cur = new Queen(cur.getRow() + 1, queens.numQueens());
+		}
+		return false;
+	}
+	/**
+	 * replaces queen with queen beside it
+	 * @return true if queen can be replaced
+	 */
+	private boolean replace() {
+		Queen cur = new Queen(queens.peek().getRow() + 1, queens.pop().getCol());
+
+		boolean placed = false;
+		while (!placed && cur.getRow() < n) {
+			if (canPlace(cur)) {
+				queens.push(cur);
+				return true;
+			}
+			cur = new Queen(cur.getRow() + 1, queens.numQueens());
 		}
 		return false;
 	}
@@ -109,17 +136,27 @@ public class Board {
 	 * @return true if cur can be placed false otherwise
 	 */
 	private boolean canPlace(Queen cur) {
-		if (numQueens == 0) {
+		if (queens.numQueens() == 0) {
 			return true;
 		}
-		for (int i = 0; i < numQueens; i++) {
-			if (queens[i].getRow() == cur.getRow()) { // if there is a queen in same row return false
-				return false;
-			} else if (canDiagonal(cur, queens[i])) {
-				return false;
+		boolean flag = true;
+		Stack temp = new Stack(n);
+		while(queens.numQueens()>0) {
+			temp.push(queens.pop());
+			if (temp.peek().getRow() == cur.getRow()) { // if there is a queen in same row return false
+				flag= false;
+			} else if(temp.peek().getCol()==cur.getCol()) {
+				flag = false;
+			}
+			else if (canDiagonal(cur, temp.peek())) {
+				flag = false;
 			}
 		}
-		return true;
+		while(temp.numQueens()>0) {
+			queens.push(temp.pop());
+		}
+		return flag;
+
 	}
 
 	/**
@@ -141,46 +178,6 @@ public class Board {
 
 		}
 		return false;
-	}
-
-	/**
-	 * Returns the queen on top of the stack
-	 * 
-	 * @return the queen on top of the stack
-	 */
-	public Queen peek() {
-
-		if (queens[0] == null) {
-			throw new IllegalStateException("zoinks");
-		} else if (numQueens == 0) {
-			return queens[0];
-		}
-		return queens[numQueens];
-
-	}
-
-	/**
-	 * removes top queen
-	 * 
-	 * @return if the queens been popped
-	 */
-	public boolean pop() {
-		queens[numQueens] = null;
-		numQueens--;
-		if (numQueens < 0) {
-			return false;
-		}
-		return true;
-	}
-
-	/**
-	 * add queen to stack
-	 * 
-	 * @param x the queen to add
-	 */
-	public void push(Queen x) {
-		queens[numQueens++] = x;
-
 	}
 
 }
