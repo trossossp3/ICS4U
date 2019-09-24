@@ -1,39 +1,51 @@
-package com.bayviewglen.stackQueue;
+package com.bayviewglen.queue;
 
-public class IntLinkedListStack implements Stack{
+import com.bayviewglen.stackQueue.IntLinkedListStack.IntegerNode;
+
+public class IntLinkedListQueue implements Stack{
 
 	private IntegerNode head;
+	
+	public IntLinkedListQueue() {
+		head = new IntegerNode(0,null);
+	}
 	public Integer peek() {
 		if(head == null) {
 			throw new IllegalStateException("Bad");
 		}
-		return head.data;
+		return head.link.data;
 	}
-
 	@Override
-	public Integer pop() {
+	public Integer dequeue() {
 		if(head == null) {
 			throw new IllegalStateException("Bad");
 		}
-		Integer x = peek();
-		head = head.link;
-		return x;
+		int temp = head.link.data;
+		head.link = head.link.link;
+		return temp;		
 	}
-
 	@Override
 	public boolean isEmpty() {
-		return head == null;
+		return head.link == null;
+	}
+	public void clear() {
+		head.link = null;
 	}
 
 	@Override
-	public void push(Integer x) {
-		head= new IntegerNode(x,head);
+	public void enqueue(Integer el) {
+		IntegerNode cur = head;
 		
+		while(cur.link != null) {
+			cur = cur.link;
+		}
+		cur.setLink(new IntegerNode(el,null));
 	}
+	
 		
-	public class IntegerNode{
+	class IntegerNode{
 		private Integer data;
-		private IntegerNode link;
+		public IntegerNode link;
 		
 		public Integer getData() {
 			return data;

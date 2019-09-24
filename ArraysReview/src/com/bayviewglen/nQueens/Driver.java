@@ -6,7 +6,7 @@ package com.bayviewglen.nQueens;
  */
 public class Driver {
 	public static void main(String[] args) {
-		int n = 8;
+		int n = 10;
 		
 		Board b = new Board(n);
 		b.doIt();
