@@ -1,6 +1,6 @@
 package com.bayviewglen.queue;
 
-public class IntArrayQueue implements Stack {
+public class IntArrayQueue implements Queue {
 
 	private int[] arr = new int[100];
 	private int manyItems=0;

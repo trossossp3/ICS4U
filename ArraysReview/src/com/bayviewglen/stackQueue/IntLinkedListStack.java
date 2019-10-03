@@ -27,7 +27,7 @@ public class IntLinkedListStack implements Stack{
 
 	@Override
 	public void push(Integer x) {
-		head= new IntegerNode(x,head);
+		head = new IntegerNode(x,head);
 		
 	}
 		

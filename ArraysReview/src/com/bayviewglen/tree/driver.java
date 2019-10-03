@@ -23,7 +23,7 @@ public class driver {
 		
 		bst.inOrderTraversal();
 		System.out.println();
-		bst.delete(70);
+		bst.delete(700);
 		bst.inOrderTraversal();
 	}
 }

@@ -3,6 +3,7 @@ public class IntArrayStack implements Stack {
 
 	private int[] arr = new int[100];
 	private int manyItems=0;
+	
 	public Integer peek() {
 		// TODO Auto-generated method stub		
 		if(manyItems ==0) {

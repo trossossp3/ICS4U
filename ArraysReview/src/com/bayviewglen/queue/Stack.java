@@ -1,6 +1,6 @@
 package com.bayviewglen.queue;
 
-public interface Stack {
+public interface Queue {
 
 	
 	public void enqueue(Integer el);

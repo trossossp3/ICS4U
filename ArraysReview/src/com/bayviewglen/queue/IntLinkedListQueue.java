@@ -2,7 +2,7 @@ package com.bayviewglen.queue;
 
 import com.bayviewglen.stackQueue.IntLinkedListStack.IntegerNode;
 
-public class IntLinkedListQueue implements Stack{
+public class IntLinkedListQueue implements Queue{
 
 	private IntegerNode head;
 	
