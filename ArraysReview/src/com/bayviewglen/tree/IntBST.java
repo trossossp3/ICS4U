@@ -85,7 +85,16 @@ public class IntBST {
 			preOrderTraversal(node.getLeftChild());
 		if (node.hasRight())
 			preOrderTraversal(node.getrightChild());
-	}
+		
+		/*
+		if(node ==null) {
+			return;
+		}else {
+			System.out.println(node);
+			preOrderTraversal(node.getLeftChild());
+			preOrderTraversal(node.getrightChild());
+		}
+	*/}
 
 	public void postOrderTraversal() {
 		postOrderTraversal(root);
