@@ -1,39 +1,42 @@
 package com.bayviewglen.queue;
 
-import com.bayviewglen.stackQueue.IntLinkedListStack.IntegerNode;
-
 public class IntLinkedListQueue implements Queue{
 
 	private IntegerNode head;
 	
 	public IntLinkedListQueue() {
-		head = new IntegerNode(0,null);
+		
 	}
 	public Integer peek() {
 		if(head == null) {
 			throw new IllegalStateException("Bad");
 		}
-		return head.link.data;
+		return head.data;
 	}
 	@Override
 	public Integer dequeue() {
 		if(head == null) {
 			throw new IllegalStateException("Bad");
 		}
-		int temp = head.link.data;
-		head.link = head.link.link;
+		int temp = head.data;
+		head = head.link;
 		return temp;		
 	}
 	@Override
 	public boolean isEmpty() {
-		return head.link == null;
+		return head == null;
 	}
 	public void clear() {
-		head.link = null;
+		head = null;
 	}
 
 	@Override
 	public void enqueue(Integer el) {
+		
+		if(head==null) {
+			head = new IntegerNode(el,head);
+			return;
+		}
 		IntegerNode cur = head;
 		
 		while(cur.link != null) {
