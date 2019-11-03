@@ -50,7 +50,7 @@ function consoleTest() {
         while (queens.length > 0) {
             temp.push(queens.pop());
 
-            if (temp.peek().row == row && temp.peek().col == col) {
+            if (queens[queens.length-1].row == row && queens[queens.length-1].col == col) {
                 flag = true;
                 break;
 
@@ -97,12 +97,12 @@ function consoleTest() {
 
         while (queens.length > 0) {
             temp.push(queens.pop());
-            if (temp.peek().row == cur.col) { // if there is a queen in same row return false
+            if (queens[queens.length-1].row == cur.col) { // if there is a queen in same row return false
                 flag = false;
-            } else if (temp.peek().col == cur.col) {
+            } else if (queens[queens.length-1].col == cur.col) {
                 flag = false;
             }
-            else if (canDiagonal(cur, temp.peek())) {
+            else if (canDiagonal(cur, queens[queens.length-1])) {
                 flag = false;
             }
         }
