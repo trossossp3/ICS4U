@@ -81,7 +81,7 @@ public class Board {
 			temp.push(queens.pop());
 
 			if (temp.peek().getRow() == row && temp.peek().getCol() == col) {
-				flag = true;;
+				flag = true;
 				break;
 
 			}

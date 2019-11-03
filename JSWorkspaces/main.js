@@ -30,7 +30,8 @@ function consoleTest(){
 //    obj.func1();
 
     obj['myQueen']=Queen(7,8);
-   // console.log(obj);
+    console.log();
+    console.log(obj);
 
     iterator(arr);
 
