@@ -11,8 +11,6 @@ function consoleTest() {
             row: row,
             col: col
         };
-
-
         return queen;
     }
 
@@ -41,7 +39,19 @@ function consoleTest() {
     }
 
     function printBoard() {
-
+        var x = "";
+        for (r = 0; r < n; r++) {
+            var q = queens.pop();
+            for (c = 0; c < n; c++) {
+                if (q.col == c)
+                // qs[r][c] = "Q";
+                    x += "Q  ";
+                else
+                    x += "X  ";
+            }
+            console.log(x);
+            x = "";
+        }
     }
 
     function checkPosition(row, col) {
@@ -97,7 +107,7 @@ function consoleTest() {
 
         while (queens.length > 0) {
             temp.push(queens.pop());
-            if (queens[queens.length-1].row == cur.col) { // if there is a queen in same row return false
+            if (queens[queens.length-1].row == cur.row) { // if there is a queen in same row return false
                 flag = false;
             } else if (queens[queens.length-1].col == cur.col) {
                 flag = false;
