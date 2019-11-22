@@ -16,6 +16,7 @@ class Player {
     }
 
 }
+var message = "";
 var canvas = document.getElementById('myCanvas');
 var ctx = canvas.getContext('2d');
 var cards = {};
@@ -31,11 +32,13 @@ var scoreTarget = 10;
 //cosole.log(new Player(getHand(),0));
 
 function drawTextBox(message){
+    console.log(message);
     ctx.fillStyle = 'WHITE';
-    ctx.fillRect(canvas.width/2,canvas.height/2, 150, 75); 
-    ctx.fillStyle = 'blue';
-    ctx.textAlign = 'center';
-    ctx.fillText(message,canvas.width/2,canvas.length/2);
+    ctx.fillRect(canvas.width/2-175,canvas.height/2-100, 350, 200); 
+    ctx.font = "20px Comic Sans MS";
+    ctx.fillStyle = "black";
+    ctx.textAlign = "center";    
+    ctx.fillText(message, canvas.width / 2, canvas.height / 2);
 
 }
 function getHand() {
@@ -60,19 +63,22 @@ function loadImages() {
 }
 function draw() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
+    drawTextBox(message);
+    message="";
     displayPlayerCards();
     for (var i = 1; i < 4; i++) {
         displayComputer(i);
     }
-    drawTextBox("test");
+    
 }
+
 function displayComputer(id) {
 
     var numCards = players[id].hand.length;
     for (var i = 0; i < numCards; i++) {
         var card = cards[players[id].hand[i]];
         var startX = (canvas.width / 3) * (id - 1);
-        ctx.drawImage(card, startX + i * 10 + 30 * id, 50, card.width / 8, card.height / 8);
+        ctx.drawImage(card, startX + i * 15 + 30 * id, 50, card.width / 8, card.height / 8);
 
     }
 }
@@ -91,7 +97,7 @@ function doIt() {
     button.disabled = false;
     button1.disabled = true;
     initDeal();
-    draw();
+    draw("");  
 
 }
 
@@ -102,7 +108,7 @@ function doItt() {
         }
         playerTurn();
         draw();
-        setTimeout(f1,1000, 1);
+        setTimeout(f1,2000, 1);
 
     }
 }
@@ -111,7 +117,7 @@ function f1(i) {
         if(i<numPlayers) {
             doTurn(i);
             draw();
-            setTimeout(f1,1000,i+1);
+            setTimeout(f1,2000,i+1);
         }
 }
 
@@ -173,16 +179,15 @@ function playerTurn() {
 
 }
 function goFish(playerID) {
-    players[playerID].addCard(getCard());
-    ctx.font = "px Comic Sans MS";
-    ctx.fillStyle = "red";
-    ctx.textAlign = "center";
-    ctx.fillText("Player: " + i + " wins", canvas.width / 2, canvas.height / 2);
+    var temp = getCard();
+    players[playerID].addCard(temp);
+    message+=("Player: "+playerID+" fished a "+temp);
 
 }
 function transact(cur, guess, person) {
     players[cur].addCard(guess);
     players[person].removeCard(guess);
+    message+=("\nplayer: "+cur+" got a "+guess+" from: "+person);
     
 
 }
@@ -239,7 +244,7 @@ function checkPairs(playerNum) {
                 i--;
                 j--;
                 b1 = true;
-                console.log("person: " + playerNum + "had a pair");
+                message=("person: " + playerNum + "had a pair");
             }
         }
     }
