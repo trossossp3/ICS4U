@@ -2,11 +2,11 @@
 <html>
 <body>
 
-<canvas id="myCanvas" width="200" height="100" style="border:1px solid #d3d3d3;">
+<canvas id="myCanvas" width="1500" height="800" style="border:10px solid #660066;background-color: green;">
 Your browser does not support the HTML5 canvas tag.</canvas>
 
 <select id ="guess"> 
-    <option value="A">Ace</option>
+    <option value="14">Ace</option>
     <option value="2">2</option>
     <option value="3">3</option>
     <option value="4">4</option>
@@ -16,18 +16,19 @@ Your browser does not support the HTML5 canvas tag.</canvas>
     <option value="8">8</option>
     <option value="9">9</option>
     <option value="10">10</option>
-    <option value="J">Jack</option>
-    <option value="K">King</option>
-    <option value="Q">Queen</option>
+    <option value="11">Jack</option>
+    <option value="13">King</option>
+    <option value="12">Queen</option>
 
   </select> 
   <select id ="person"> 
     <option value="1">CP1</option>
     <option value="2">CP2</option>
     <option value="3">CP3</option>
-  </select> 
 
-<button id="killMe">Try it</button>
+  </select> 
+<button onclick ="doIt()" id="k">start</button>
+<button onclick ="doItt()" id="killMe">Try it</button>
 
  <script src="script.js"></script> 
 
