@@ -2,6 +2,7 @@ function consoleTest() {
     var n = 10;
     var queens = [];
     var temp = [];
+    queens[queens.length-1];
     /**
      * 
      * queen constructor
@@ -17,6 +18,7 @@ function consoleTest() {
     }
 
     while (queens.length > -1 && queens.length < n) {
+        console.log(queens);
         if (!place()) {
             try {
                 while (!replace())
@@ -36,10 +38,7 @@ function consoleTest() {
     }
 
 
-    function place() {
-
-    }
-
+    
     function printBoard() {
 
     }
@@ -64,11 +63,13 @@ function consoleTest() {
 
     function place() {
         var cur = Queen(0, queens.length);
+        console.log(cur);
 
         var placed = false;
         while (!placed && cur.row < n) {
             if (canPlace(cur)) {
                 queens.push(cur);
+                console.log(queens);
                 return true;
             }
             cur = new Queen(cur.getRow() + 1, queens.length);
@@ -90,6 +91,7 @@ function consoleTest() {
         return false;
     }
     function canPlace(cur) {
+        
         if (queens.length == 0) {
             return true;
         }
@@ -97,6 +99,7 @@ function consoleTest() {
 
         while (queens.length > 0) {
             temp.push(queens.pop());
+           
             if (queens[queens.length-1].row == cur.col) { // if there is a queen in same row return false
                 flag = false;
             } else if (queens[queens.length-1].col == cur.col) {
