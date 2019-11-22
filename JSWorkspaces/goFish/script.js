@@ -1,41 +1,26 @@
 class Player {
-    constructor(cards, score) {
-        this.cards = cards;
+    constructor(hand, score) {
+        this.hand = hand;
         this.score = score;
     }
 
     addCard(card) {
-        this.cards.push(card);
+        this.hand.push(card);
     }
     removeCard(card) {
-        for (var i = 0; i < this.cards.length; i++) {
-            if (this.cards[i] === card) {
-                this.cards.splice(i, 1);
+        for (var i = 0; i < this.hand.length; i++) {
+            if (this.hand[i] === card) {
+                this.hand.splice(i, 1);
             }
         }
     }
 
 }
-/*var c = document.getElementById("myCanvas");
-var ctx = c.getContext("2d");
-
-var img = new Image();*/
-
-
-
-
-
 var canvas = document.getElementById('myCanvas');
 var ctx = canvas.getContext('2d');
-
-//imgInit();
-
-
-//ctx.drawImage(img,10,10);
-//button.onclick = doItt();
+var cards = {};
 var button = document.getElementById("killMe");
 button.disabled = true;
-
 
 
 var numPlayers = 4;
@@ -44,10 +29,7 @@ var players = [];
 var scoreTarget = 10;
 //cosole.log(new Player(getHand(),0));
 
-function doIt() {
-    button.disabled = false;
 
-}
 function getHand() {
     var arr = [];
     for (var i = 0; i < 5; i++) {
@@ -58,58 +40,91 @@ function getHand() {
 function getCard() {
     return Math.floor((Math.random() * 13) + 2);
 
-    /**
-     * 11 =J
-     * 12 = Q
-     * 13 = K
-     * 14 = A
-     * 
-     */
-
-
 }
 
-function displayCards() {
-    var numCards = players[0].cards.length;
-    for (var i = 0; i < numCards; i++) {       
+function loadImages() {
+
+    for (var i = 2; i < 15; i++) {
         var img = new Image();
-        img.onload = function () {
-            ctx.drawImage(img, i/2*img.width, 50, img.width * 0.3, img.height * 0.3);
-        };
-        img.src = getCardImg(players[0].cards[i]);
+        img.src = "cards/" + i + ".png";
+        cards[i] = img;
+    }
+}
+function draw() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    displayPlayerCards();
+    for (var i = 1; i < 4; i++) {
+        displayComputer(i);
+    }
+}
+function displayComputer(id) {
+
+    var numCards = players[id].hand.length;
+    for (var i = 0; i < numCards; i++) {
+        var card = cards[players[id].hand[i]];
+        var startX = (canvas.width / 3) * (id - 1);
+        ctx.drawImage(card, startX + i * 10 + 30 * id, 50, card.width / 8, card.height / 8);
+
+    }
+}
+function displayPlayerCards() {
+
+    var numCards = players[0].hand.length;
+    for (var i = 0; i < numCards; i++) {
+        var card = cards[players[0].hand[i]];
+        var startX = (canvas.width / 2) - ((numCards * card.width / 4)) / 2;
+        ctx.drawImage(card, startX + i * card.width / 4 + i * 10, 500, card.width / 4, card.height / 4);
+
     }
 }
 
+function doIt() {
+    button.disabled = false;
+    initDeal();
+    draw();
 
+}
 
 function doItt() {
-    //console.log("wqhbnfujb");
-    initDeal();
-    if (isOver) {
-        for (var i = 0; i < 4; i++) {
-            displayCards();
-            console.log("player: " + i + "   " + players[i].cards);
+
+
+    if (!isOver()) {
+        // for (var i = 0; i < 4; i++) {
+
+        //console.log("player: " + i + "   " + players[i].hand);
+        // }
+       // draw();
+        for(var i=0;i<4;i++){
+            if(checkPairs(i)){
+                sleep(1000);
+            };
         }
         playerTurn();
+        draw();
+        //sleep(1000);
         for (var i = 1; i < numPlayers; i++) {
             doTurn(i);
+            
         }
     }
 }
 
 
 function doTurn(player) {
-    checkPairs(player);
+    
     var guess = getGuess(player);
     var person = getPerson(player);
 
-    var b1 = hasCard(guess, person); //0 no one has it
+    var b1 = hasCard(guess, person);
     if (b1) {
-        transact(guess, person);
+        transact(player, guess, person);
     } else {
         goFish(player);
     }
-    checkPairs(player);
+
+    if(checkPairs(player)){
+        
+    };
 
 }
 function getPerson(playerID) {
@@ -123,38 +138,52 @@ function getPerson(playerID) {
 function getGuess(playerID) {
     var y = Math.floor((Math.random() * 2));
     if (y === 1) {
-        cards = players[playerID].cards;
+        deck = players[playerID].hand;
         var x = Math.floor((Math.random() * 4));
-        return cards[x];
+        return deck[x];
     } else {
         return getCard();
     }
 }
 function playerTurn() {
-    checkPairs(0);
+    
+    
     var guess = parseInt(document.getElementById("guess").value);
     var person = document.getElementById("person").value;
 
-    var b1 = hasCard(guess, person); //0 no one has it
+    var b1 = hasCard(guess, person);
     if (b1) {
-        transact(guess, person);
+        transact(0, guess, person);
+        draw();
+        sleep(1000);
     } else {
         goFish(0);
+        draw();
+        sleep(1000);
     }
-    checkPairs(0);
+
+    if(checkPairs(0)){
+         draw();
+        sleep(1000); 
+    }
+    
 }
 function goFish(playerID) {
     players[playerID].addCard(getCard());
+    draw();
+    sleep(1000);
 }
-function transact(guess, person) {
-    players[0].addCard(guess);
+function transact(cur, guess, person) {
+    players[cur].addCard(guess);
     players[person].removeCard(guess);
+    draw();
+    sleep(1000);
 }
 function hasCard(guess, person) {
-    //console.log(players[person].cards.length);
-    for (var i = 0; i < players[person].cards.length; i++) {
-        // console.log(players[person].cards[i]);
-        var n53 = players[person].cards[i];
+    //console.log(players[person].hand.length);
+    for (var i = 0; i < players[person].hand.length; i++) {
+        // console.log(players[person].hand[i]);
+        var n53 = players[person].hand[i];
         if (n53 === parseInt(guess)) {
             return true;
         }
@@ -180,50 +209,31 @@ function isOver() {
     return b1;
 }
 function checkPairs(playerNum) {
-
+    //it is removing all three if there are three
+    var b1 = false;
     player = players[playerNum];
-    for (var i = 0; i < player.cards.length; i++) {
-        for (var j = 0; j < player.cards.length; j++) {
-            if (i !== j && player.cards[i] === player.cards[j]) {
+    for (var i = 0; i < player.hand.length - 1; i++) {
+        for (var j = i + 1; j < player.hand.length; j++) {
+            if (i !== j && player.hand[i] === player.hand[j]) {
                 players[playerNum].score += 1;
-
-                players[playerNum].removeCard(player.cards[i]);
-
-                players[playerNum].removeCard(player.cards[j - 1]);
+                players[playerNum].hand.splice(j, 1);
+                players[playerNum].hand.splice(i, 1);
+                i--;
+                j--;
+                b1 = true;
                 console.log("person: " + playerNum + "had a pair");
             }
         }
     }
+    return b1;
 
 }
-function getCardImg(card) {
-    switch (card) {
-        case 2:
-            return 'cards/2.PNG';
-        case 3:
-            return 'cards/3.png'
-        case 4:
-            return 'cards/4.png'
-        case 5:
-            return 'cards/5.png' 
-        case 6:
-            return 'cards/6.png' 
-         case 7:
-            return 'cards/7.png' 
-        case 8:
-            return 'cards/8.png' 
-        case 9:
-            return 'cards/9.png' 
-        case 10:
-            return 'cards/10.png' 
-        case 11:
-            return 'cards/11.png' 
-        case 12:
-            return 'cards/12.png' 
-        case 13:
-            return 'cards/13.png' 
-        case 14:
-            return 'cards/14.png' 
 
+function sleep(milliseconds) {
+    var start = new Date().getTime();
+    for (var i = 0; i < 1e7; i++) {
+      if ((new Date().getTime() - start) > milliseconds){
+        break;
+      }
     }
-}
+  }
