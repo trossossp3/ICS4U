@@ -21,6 +21,7 @@ var ctx = canvas.getContext('2d');
 var cards = {};
 var button = document.getElementById("killMe");
 button.disabled = true;
+var button1 = document.getElementById("k");
 
 
 var numPlayers = 4;
@@ -29,7 +30,14 @@ var players = [];
 var scoreTarget = 10;
 //cosole.log(new Player(getHand(),0));
 
+function drawTextBox(message){
+    ctx.fillStyle = 'WHITE';
+    ctx.fillRect(canvas.width/2,canvas.height/2, 150, 75); 
+    ctx.fillStyle = 'blue';
+    ctx.textAlign = 'center';
+    ctx.fillText(message,canvas.width/2,canvas.length/2);
 
+}
 function getHand() {
     var arr = [];
     for (var i = 0; i < 5; i++) {
@@ -56,6 +64,7 @@ function draw() {
     for (var i = 1; i < 4; i++) {
         displayComputer(i);
     }
+    drawTextBox("test");
 }
 function displayComputer(id) {
 
@@ -73,45 +82,43 @@ function displayPlayerCards() {
     for (var i = 0; i < numCards; i++) {
         var card = cards[players[0].hand[i]];
         var startX = (canvas.width / 2) - ((numCards * card.width / 4)) / 2;
-        ctx.drawImage(card, startX + i * card.width / 4 + i * 10, 500, card.width / 4, card.height / 4);
+        ctx.drawImage(card, startX + i * card.width / 4 + i * 10, 600, card.width / 4, card.height / 4);
 
     }
 }
 
 function doIt() {
     button.disabled = false;
+    button1.disabled = true;
     initDeal();
     draw();
 
 }
 
 function doItt() {
-
-
     if (!isOver()) {
-        // for (var i = 0; i < 4; i++) {
-
-        //console.log("player: " + i + "   " + players[i].hand);
-        // }
-       // draw();
-        for(var i=0;i<4;i++){
-            if(checkPairs(i)){
-                sleep(1000);
-            };
+        for (var i = 0; i < 4; i++) {
+            checkPairs(i)
         }
         playerTurn();
         draw();
-        //sleep(1000);
-        for (var i = 1; i < numPlayers; i++) {
-            doTurn(i);
-            
-        }
+        setTimeout(f1,1000, 1);
+
     }
 }
 
+function f1(i) {
+        if(i<numPlayers) {
+            doTurn(i);
+            draw();
+            setTimeout(f1,1000,i+1);
+        }
+}
 
 function doTurn(player) {
-    
+    if (players[player].hand.length === 0) {
+        players[player].hand = getHand();
+    }
     var guess = getGuess(player);
     var person = getPerson(player);
 
@@ -122,9 +129,7 @@ function doTurn(player) {
         goFish(player);
     }
 
-    if(checkPairs(player)){
-        
-    };
+    checkPairs(player)
 
 }
 function getPerson(playerID) {
@@ -146,38 +151,40 @@ function getGuess(playerID) {
     }
 }
 function playerTurn() {
-    
-    
+    if (players[0].hand.length === 0) {
+        players[0].hand = getHand();
+    }
+
     var guess = parseInt(document.getElementById("guess").value);
     var person = document.getElementById("person").value;
 
     var b1 = hasCard(guess, person);
     if (b1) {
         transact(0, guess, person);
-        draw();
-        sleep(1000);
+        
+
     } else {
         goFish(0);
-        draw();
-        sleep(1000);
+        
+
     }
 
-    if(checkPairs(0)){
-         draw();
-        sleep(1000); 
-    }
-    
+    checkPairs(0);
+
 }
 function goFish(playerID) {
     players[playerID].addCard(getCard());
-    draw();
-    sleep(1000);
+    ctx.font = "px Comic Sans MS";
+    ctx.fillStyle = "red";
+    ctx.textAlign = "center";
+    ctx.fillText("Player: " + i + " wins", canvas.width / 2, canvas.height / 2);
+
 }
 function transact(cur, guess, person) {
     players[cur].addCard(guess);
     players[person].removeCard(guess);
-    draw();
-    sleep(1000);
+    
+
 }
 function hasCard(guess, person) {
     //console.log(players[person].hand.length);
@@ -201,12 +208,23 @@ function initDeal() {
 }
 function isOver() {
     var b1 = false;
+    var winner;
     for (var i = 0; i < numPlayers; i++) {
         if (players[i].score >= 10) {
             b1 = true;
+            winner = i;
+            displayWin(i);
         }
     }
     return b1;
+}
+function displayWin(i) {
+    ctx.clearRect(0, 0, canvas.width, canvas.height)
+    ctx.font = "100px Comic Sans MS";
+    ctx.fillStyle = "red";
+    ctx.textAlign = "center";
+    ctx.fillText("Player: " + i + " wins", canvas.width / 2, canvas.height / 2);
+
 }
 function checkPairs(playerNum) {
     //it is removing all three if there are three
@@ -232,8 +250,8 @@ function checkPairs(playerNum) {
 function sleep(milliseconds) {
     var start = new Date().getTime();
     for (var i = 0; i < 1e7; i++) {
-      if ((new Date().getTime() - start) > milliseconds){
-        break;
-      }
+        if ((new Date().getTime() - start) > milliseconds) {
+            break;
+        }
     }
-  }
+}

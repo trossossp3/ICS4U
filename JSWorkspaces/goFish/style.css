@@ -1,0 +1,59 @@
+canvas{
+    
+    border:10px solid #660066;
+    background-repeat: repeat;
+    background-position: 50%;
+    background-size: 100px;
+    background-image: url('kevin.png');
+}
+body{
+    background-color: #3f4d5a;
+    text-align: center;
+    background-repeat: repeat;
+    background-position: 50%;
+    background-size: 200px;
+    background-image: url('kevin.png');
+}
+#k{
+    background-color: #3f4d5a; /* Green */
+    border: 2px, white;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+
+}
+#killMe{
+    background-color: #3f4d5a; /* Green */
+    border: 2px, white;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+}
+#person{
+    background-color: #3f4d5a; /* Green */
+    border: 2px, white;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+}
+
+#guess{
+    background-color: #3f4d5a; /* Green */
+    border: 2px, white;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+}
+
