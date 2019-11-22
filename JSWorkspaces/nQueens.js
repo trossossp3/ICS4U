@@ -12,8 +12,6 @@ function consoleTest() {
             row: row,
             col: col
         };
-
-
         return queen;
     }
 
@@ -40,7 +38,19 @@ function consoleTest() {
 
     
     function printBoard() {
-
+        var x = "";
+        for (r = 0; r < n; r++) {
+            var q = queens.pop();
+            for (c = 0; c < n; c++) {
+                if (q.col == c)
+                // qs[r][c] = "Q";
+                    x += "Q  ";
+                else
+                    x += "X  ";
+            }
+            console.log(x);
+            x = "";
+        }
     }
 
     function checkPosition(row, col) {
