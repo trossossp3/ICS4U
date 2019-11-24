@@ -31,15 +31,53 @@ var players = [];
 var scoreTarget = 10;
 //cosole.log(new Player(getHand(),0));
 
-function drawTextBox(message){
+function drawTextBox(message) {
     console.log(message);
     ctx.fillStyle = 'WHITE';
-    ctx.fillRect(canvas.width/2-175,canvas.height/2-100, 350, 200); 
+    ctx.fillRect(canvas.width / 2 - 175, canvas.height / 2 - 100, 350, 200);
     ctx.font = "20px Comic Sans MS";
     ctx.fillStyle = "black";
-    ctx.textAlign = "center";    
-    ctx.fillText(message, canvas.width / 2, canvas.height / 2);
+    ctx.textAlign = "center";
+    var lines = message.split("*")
+    var lineHeight = 20;
+    for (var i = 0; i < lines.length; i++) {
+        ctx.fillText(lines[i], canvas.width / 2, canvas.height / 2 + i * lineHeight);
+    }
 
+
+}
+function displayScore(id) {
+    console.log(message);
+    ctx.fillStyle = 'WHITE';
+    ctx.font = "12px Comic Sans MS";
+   
+    switch (id) {
+        case 0:
+                ctx.fillRect(canvas.width/2-175/2, 510, 175, 60);
+            ctx.fillStyle = "black";
+            ctx.textAlign = "center";
+            ctx.fillText("Player "+id+" score: "+players[id].score, canvas.width / 2,540);
+            break;
+        case 1:
+            ctx.fillRect(canvas.width/2-175/2-600, 150, 175, 60);
+            ctx.fillStyle = "black";
+            ctx.textAlign = "center";
+            ctx.fillText("Player "+id+" score: "+players[id].score, canvas.width/2-600,185);    
+            break;
+        case 2:
+                ctx.fillRect(canvas.width/2-175/2, 150, 175, 60);
+                ctx.fillStyle = "black";
+                ctx.textAlign = "center";
+                ctx.fillText("Player "+id+" score: "+players[id].score, canvas.width/2,185);    
+                break;
+        case 3:
+                ctx.fillRect(canvas.width/2-175/2+600, 150, 175, 60);
+                ctx.fillStyle = "black";
+                ctx.textAlign = "center";
+                ctx.fillText("Player "+id+" score: "+players[id].score, canvas.width/2+600,185);    
+                break;
+    }
+    
 }
 function getHand() {
     var arr = [];
@@ -54,6 +92,9 @@ function getCard() {
 }
 
 function loadImages() {
+    var temp = new Image();
+    temp.src = "cards/back.png";
+    cards[0] = temp;
 
     for (var i = 2; i < 15; i++) {
         var img = new Image();
@@ -64,19 +105,22 @@ function loadImages() {
 function draw() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     drawTextBox(message);
-    message="";
+    
+    message = "";
     displayPlayerCards();
+    displayScore(0);
     for (var i = 1; i < 4; i++) {
         displayComputer(i);
+        displayScore(i);
     }
-    
+
 }
 
 function displayComputer(id) {
 
     var numCards = players[id].hand.length;
     for (var i = 0; i < numCards; i++) {
-        var card = cards[players[id].hand[i]];
+        var card = cards[0];
         var startX = (canvas.width / 3) * (id - 1);
         ctx.drawImage(card, startX + i * 15 + 30 * id, 50, card.width / 8, card.height / 8);
 
@@ -97,28 +141,42 @@ function doIt() {
     button.disabled = false;
     button1.disabled = true;
     initDeal();
-    draw("");  
+    draw("");
 
 }
 
 function doItt() {
-    if (!isOver()) {
-        for (var i = 0; i < 4; i++) {
+    
+        
+        /*(for (var i = 0; i < 4; i++) {
             checkPairs(i)
-        }
+        }*/
+        setTimeout(f2, 2000)
         playerTurn();
         draw();
-        setTimeout(f1,2000, 1);
-
+        setTimeout(f1, 2000, 1);
+        if (!isOver()) {
+            if (players[0].hand.length === 0) {
+                players[0].hand = getHand();
+            }
+       
+        
     }
 }
 
 function f1(i) {
-        if(i<numPlayers) {
-            doTurn(i);
-            draw();
-            setTimeout(f1,2000,i+1);
-        }
+    if (i < numPlayers) {
+        doTurn(i);
+        draw();
+        setTimeout(f1, 2000, i + 1);
+    }
+}
+function f2(i) {
+    if (i < numPlayers) {
+        checkPairs(i);
+        draw();
+        setTimeout(f1, 2000, i + 1);
+    }
 }
 
 function doTurn(player) {
@@ -157,9 +215,7 @@ function getGuess(playerID) {
     }
 }
 function playerTurn() {
-    if (players[0].hand.length === 0) {
-        players[0].hand = getHand();
-    }
+   
 
     var guess = parseInt(document.getElementById("guess").value);
     var person = document.getElementById("person").value;
@@ -167,11 +223,10 @@ function playerTurn() {
     var b1 = hasCard(guess, person);
     if (b1) {
         transact(0, guess, person);
-        
 
     } else {
         goFish(0);
-        
+
 
     }
 
@@ -181,14 +236,36 @@ function playerTurn() {
 function goFish(playerID) {
     var temp = getCard();
     players[playerID].addCard(temp);
-    message+=("Player: "+playerID+" fished a "+temp);
+
+    if (temp <= 10)
+        temp = temp;
+    else if (temp == 11)
+        temp = "J";
+    else if (temp == 12)
+        temp = "Q";
+    else if (temp == 13)
+        temp = "K";
+    else
+        temp = "A";
+    message += ("Player: " + playerID + " fished a " + temp + "*");
 
 }
 function transact(cur, guess, person) {
     players[cur].addCard(guess);
     players[person].removeCard(guess);
-    message+=("\nplayer: "+cur+" got a "+guess+" from: "+person);
-    
+
+    if (guess <= 10)
+        guess = guess;
+    else if (guess == 11)
+        guess = "J";
+    else if (guess == 12)
+        guess = "Q";
+    else if (guess == 13)
+        guess = "K";
+    else
+        guess = "A";
+    message += ("Player: " + cur + " got a " + guess + " from Player " + person + "*");
+
 
 }
 function hasCard(guess, person) {
@@ -244,12 +321,13 @@ function checkPairs(playerNum) {
                 i--;
                 j--;
                 b1 = true;
-                message=("person: " + playerNum + "had a pair");
+                message += ("Player: " + playerNum + " had a pair" + "*");
+                //draw();
+                console.log(message);
             }
         }
     }
     return b1;
-
 }
 
 function sleep(milliseconds) {

@@ -1,3 +1,1 @@
-display points
-hide the cards
-give the cards when the person runs out quicker so that they get them before they guess
+clean up code
