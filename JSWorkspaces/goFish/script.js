@@ -93,7 +93,7 @@ function getCard() {
 
 function loadImages() {
     var temp = new Image();
-    temp.src = "cards/back.png";
+    temp.src = "cards/back1.png";
     cards[0] = temp;
 
     for (var i = 2; i < 15; i++) {
@@ -122,7 +122,7 @@ function displayComputer(id) {
     for (var i = 0; i < numCards; i++) {
         var card = cards[0];
         var startX = (canvas.width / 3) * (id - 1);
-        ctx.drawImage(card, startX + i * 15 + 30 * id, 50, card.width / 8, card.height / 8);
+        ctx.drawImage(card, startX + i * 15 + 30 * id, 50, card.width / 7, card.height / 7);
 
     }
 }
@@ -140,6 +140,7 @@ function displayPlayerCards() {
 function doIt() {
     button.disabled = false;
     button1.disabled = true;
+    button1.style.visibility = "hidden";
     initDeal();
     draw("");
 
