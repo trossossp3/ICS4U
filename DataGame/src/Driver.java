@@ -12,6 +12,20 @@ public class Driver {
 	static Player[] players = new Player[numPlayers];
 
 	public static void main(String[] args) {
+		for (int i = 0; i < 1; i++) {
+			doIT();
+		}
+	}
+
+	public static void doIT() {
+		turnNum=0;
+		System.out.println("-----------------------------");
+		for(int j =0;j<6;j++) {
+			numRoll[j]=0;
+		}
+		for(int l = 0;l<4;l++) {
+			numSuits[l]=0;
+		}
 		for (int i = 0; i < numPlayers; i++) {
 			players[i] = new Player();
 		}
@@ -19,19 +33,24 @@ public class Driver {
 		while (!over()) {
 			doTurn();
 			checkBoard();
-
 			turnNum++;
+			
+			for(int i=0;i<numPlayers;i++) {
+				System.out.println("Player"+i+": suit: "+players[i].getArr()[0]+" roll: "+players[i].getArr()[1]+" total: "+players[i].getArr()[2]);
+			}
 		}
-		
-		System.out.println("Number of Spades: "+numRoll[0]);
-		System.out.println("Number of Diamonds: "+numRoll[1]);
-		System.out.println("Number of Hearts: "+numRoll[2]);
-		System.out.println("Number of Clubs: "+numRoll[3]);
+/*
+		System.out.println("Number of Spades: " + numRoll[0]);
+		System.out.println("Number of Diamonds: " + numRoll[1]);
+		System.out.println("Number of Hearts: " + numRoll[2]);
+		System.out.println("Number of Clubs: " + numRoll[3]);
+		System.out.println(turnNum);
 		System.out.println();
-		
-		for(int i =0; i<numRoll.length;i++) {
-			System.out.println("Number of "+ (i+1)+"s rolled "+numRoll[i]);
+
+		for (int i = 0; i < numRoll.length; i++) {
+			System.out.println("Number of " + (i + 1) + "s rolled " + numRoll[i]);
 		}
+		*/
 	}
 
 	private static void checkBoard() {
@@ -47,22 +66,25 @@ public class Driver {
 
 	private static void doTurn() {
 		String rolls = "";
-		//System.out.println("_______________________________________________________");
-		//System.out.println("Turn: " + turnNum);
+		String[] arr1 = new String[3];
+		
 		for (int i = 0; i < numPlayers; i++) {
 			String suit = getSuit();
+			arr1[0]=suit;
 			double multiplier = getMultiplier(suit);
 			int dice = roll();
 			int roll = (int) Math.round(dice * multiplier);
+			arr1[1]=""+dice;
+			arr1[2]=""+roll;
 			players[i].setCurSpace(players[i].getCurSpace() + roll);
-
-			//System.out.println("\t Suit: " + suit + "\t roll: " + dice + "\t numSpaces: " + roll);
+			players[i].setArr(arr1);
+			//System.out.println(players[i].getArr()[0]);
 		}
 	}
 
 	private static double getMultiplier(String suit) {
 		switch (suit) {
-		case "H": // hearts
+		case "H": 
 			return 0;
 		case "C":
 			return 0.5;
@@ -77,7 +99,7 @@ public class Driver {
 	private static int roll() {
 
 		int n = (int) (Math.random() * DICE_SIDES) + 1;
-		numRoll[n-1]++;
+		numRoll[n - 1]++;
 		return n;
 	}
 
@@ -95,6 +117,28 @@ public class Driver {
 		} else {
 			numSuits[x]++;
 			return "C";
+		}
+	}
+	private static String getSuit1() {
+		/**
+		 * 0 is spades
+		 * 1 is diamonds
+		 * 2 is hearts
+		 * 3 is clubs 
+		 */
+		int x = (int) (Math.random() * 4);
+		if (x == 0) {
+			numSuits[x]++;
+			return "1";
+		} else if (x == 1) {
+			numSuits[x]++;
+			return "2";
+		} else if (x == 2) {
+			numSuits[x]++;
+			return "3";
+		} else {
+			numSuits[x]++;
+			return "4";
 		}
 	}
 

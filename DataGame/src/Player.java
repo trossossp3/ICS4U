@@ -2,9 +2,18 @@
 public class Player {
 	private int score;
 	private int curSpace;
+	private String[] arr;
 	
 	public Player() {
 		score = 0;
+	}
+
+	public String[] getArr() {
+		return arr;
+	}
+
+	public void setArr(String[] arr) {
+		this.arr = arr;
 	}
 
 	public int getScore() {
@@ -22,5 +31,6 @@ public class Player {
 	public void setCurSpace(int curSpace) {
 		this.curSpace = curSpace;
 	}
+	
 	
 }
