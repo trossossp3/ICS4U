@@ -1,30 +1,37 @@
+import java.io.*;
+import java.util.*;
 
 public class Driver {
 	public static int numPlayers = 4;
-	public static int numSpaces = 40;
+	public static int numSpaces = 20;
 	public final static int DICE_SIDES = 6;
 	public final int NUM_SUITS = 4;
 	static final int SCORE_GOAL = 3;
-	static int turnNum = 0;
+	static int turnNum = 1;
 	static int[] numSuits = new int[4];
 	static int[] numRoll = new int[6];
 
 	static Player[] players = new Player[numPlayers];
 
-	public static void main(String[] args) {
-		for (int i = 0; i < 1; i++) {
-			doIT();
+	public static void main(String[] args) throws IOException {
+		BufferedWriter out = new BufferedWriter(new FileWriter("C:\\Dev\\ICS4U\\DataGame\\src\\test1.txt"));
+		for (int i = 0; i < 20; i++) {
+			doIT(out);
 		}
+		out.close();
 	}
 
-	public static void doIT() {
-		turnNum=0;
-		System.out.println("-----------------------------");
-		for(int j =0;j<6;j++) {
-			numRoll[j]=0;
+	public static void doIT(BufferedWriter out) throws IOException {
+
+		
+	
+		
+
+		for (int j = 0; j < 6; j++) {
+			numRoll[j] = 0;
 		}
-		for(int l = 0;l<4;l++) {
-			numSuits[l]=0;
+		for (int l = 0; l < 4; l++) {
+			numSuits[l] = 0;
 		}
 		for (int i = 0; i < numPlayers; i++) {
 			players[i] = new Player();
@@ -34,23 +41,11 @@ public class Driver {
 			doTurn();
 			checkBoard();
 			turnNum++;
-			
-			for(int i=0;i<numPlayers;i++) {
-				System.out.println("Player"+i+": suit: "+players[i].getArr()[0]+" roll: "+players[i].getArr()[1]+" total: "+players[i].getArr()[2]);
-			}
-		}
-/*
-		System.out.println("Number of Spades: " + numRoll[0]);
-		System.out.println("Number of Diamonds: " + numRoll[1]);
-		System.out.println("Number of Hearts: " + numRoll[2]);
-		System.out.println("Number of Clubs: " + numRoll[3]);
-		System.out.println(turnNum);
-		System.out.println();
 
-		for (int i = 0; i < numRoll.length; i++) {
-			System.out.println("Number of " + (i + 1) + "s rolled " + numRoll[i]);
+			String s1 = players[0].getArr()[0] + "\t" + players[0].getArr()[1] + "\t" + players[1].getArr()[2] + "\n";
+			out.write(s1);
 		}
-		*/
+		
 	}
 
 	private static void checkBoard() {
@@ -61,34 +56,58 @@ public class Driver {
 
 			}
 		}
-
 	}
 
 	private static void doTurn() {
+
 		String rolls = "";
-		String[] arr1 = new String[3];
-		
+
 		for (int i = 0; i < numPlayers; i++) {
+			String[] arr1 = new String[3];
 			String suit = getSuit();
-			arr1[0]=suit;
+
+			arr1[0] = suit;
 			double multiplier = getMultiplier(suit);
 			int dice = roll();
 			int roll = (int) Math.round(dice * multiplier);
-			arr1[1]=""+dice;
-			arr1[2]=""+roll;
+			arr1[1] = "" + dice;
+			arr1[2] = "" + roll;
 			players[i].setCurSpace(players[i].getCurSpace() + roll);
 			players[i].setArr(arr1);
-			//System.out.println(players[i].getArr()[0]);
+			// System.out.println(players[i].getArr()[0]);
 		}
+	}
+
+	private static void f1() {
+		for (int i = 0; i < 4; i++) {
+			for (int j = 0; j < 6; j++) {
+				System.out.println((int) Math.round(j * getMultiplier(i)));
+			}
+		}
+
 	}
 
 	private static double getMultiplier(String suit) {
 		switch (suit) {
-		case "H": 
+		case "H":
 			return 0;
 		case "C":
 			return 0.5;
 		case "S":
+			return 1;
+		default:
+			return 1.5;
+
+		}
+	}
+
+	private static double getMultiplier(int suit) {
+		switch (suit) {
+		case 0:
+			return 0;
+		case 1:
+			return 0.5;
+		case 2:
 			return 1;
 		default:
 			return 1.5;
@@ -117,28 +136,6 @@ public class Driver {
 		} else {
 			numSuits[x]++;
 			return "C";
-		}
-	}
-	private static String getSuit1() {
-		/**
-		 * 0 is spades
-		 * 1 is diamonds
-		 * 2 is hearts
-		 * 3 is clubs 
-		 */
-		int x = (int) (Math.random() * 4);
-		if (x == 0) {
-			numSuits[x]++;
-			return "1";
-		} else if (x == 1) {
-			numSuits[x]++;
-			return "2";
-		} else if (x == 2) {
-			numSuits[x]++;
-			return "3";
-		} else {
-			numSuits[x]++;
-			return "4";
 		}
 	}
 
