@@ -1,0 +1,46 @@
+package com.bayviewglen.quickSort;
+
+public class QuickSort {
+	/*
+	 * sets the last element to be the pivot and moves everything greater than it to
+	 * its right
+	 * returns the index of the pivot
+	 */
+	public int partion(int arr[], int min, int max) {
+		int pivot = arr[max];
+		int i = min - 1; // index of the smaller element
+		for (int j = min; j < max; j++) {
+			if (arr[j] < pivot) {
+				i++;
+
+				int temp = arr[j];
+				arr[j] = arr[i];
+				arr[i] = temp;
+
+			}
+		}
+		// swap i+1 with the pivot
+		int temp = arr[i + 1];
+		arr[i + 1] = arr[max];
+		arr[max] = temp;
+		return i + 1;
+	}
+
+	public void sort(int arr[], int min, int max) {		
+		if(min<max) {
+			int partion = partion(arr,min,max);
+			sort(arr,min,partion-1);
+			sort(arr,partion+1,max);			
+		}
+	}
+	/* A utility function to print array of size n */
+   public void printArray(int arr[]) 
+    { 
+        int n = arr.length; 
+        for (int i=0; i<n; ++i) { 
+            System.out.print(arr[i]+" "); 
+        }
+        System.out.println(); 
+    } 
+  
+}
