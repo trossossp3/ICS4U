@@ -1,0 +1,23 @@
+package com.bayviewglen.quickSort;
+
+public class Driver {
+	/*
+	 * sets the last element to be the pivot and moves everything greater than it to its right
+	 */
+	public int partion(int arr[],int min, int max) {
+		int pivot = arr[max];
+		int i = min-1; //index of the smaller element
+		for(int j = min;j<max;j++) {
+			if(arr[j]<pivot) {
+				i++;
+				
+				int temp =arr[j];
+				arr[j]=arr[i];
+				arr[i]=temp;
+				
+				
+			}
+		}
+	}
+
+}

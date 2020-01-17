@@ -1,0 +1,31 @@
+package com.bayviewglen.quickSort;
+
+import java.io.BufferedReader;
+import java.io.FileReader;
+
+public class Driver {
+
+    // Driver program 
+    public static void main(String args[]) 
+    { 
+
+		BufferedReader br = new BufferedReader(new FileReader("C:\\Dev\\CodingClub\\CodingClub\\src\\com\\matladyhandsnam\\sorting\\test1.txt"));
+		int amountNums = Integer.parseInt(br.readLine());
+		int[] nums = new int[amountNums];
+		for (int i = 0; i < amountNums; i++) {
+			nums[i] = Integer.parseInt(br.readLine());
+
+		}
+		br.close();
+        int arr[] = {10, 7, 8, 9, 1, 5}; 
+        int n = arr.length; 
+  
+        QuickSort ob = new QuickSort(); 
+        ob.sort(arr, 0, n-1); 
+  
+        System.out.println("sorted array"); 
+        ob.printArray(arr); 
+    } 
+} 
+
+

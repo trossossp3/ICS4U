@@ -1862,6 +1862,7 @@ Caused by: org.eclipse.aether.transfer.ArtifactNotFoundException: Could not find
 
 !ENTRY org.eclipse.equinox.p2.metadata.repository 4 1000 2020-01-07 09:40:34.155
 !MESSAGE No repository found at http://downloads.genuitec.com/downloads/products/webclipse/updates/wc2017ci14.
+<<<<<<< HEAD
 !SESSION 2020-01-10 10:55:58.710 -----------------------------------------------
 eclipse.buildId=4.8.0.I20180611-0500
 java.version=1.8.0_151
@@ -1984,3 +1985,5 @@ Caused by: java.lang.IllegalStateException: Expected BEGIN_OBJECT but was STRING
 	at com.google.gson.stream.JsonReader.beginObject(JsonReader.java:385)
 	at com.google.gson.internal.bind.ReflectiveTypeAdapterFactory$Adapter.read(ReflectiveTypeAdapterFactory.java:213)
 	... 9 more
+=======
+>>>>>>> 4d8e8c84... test

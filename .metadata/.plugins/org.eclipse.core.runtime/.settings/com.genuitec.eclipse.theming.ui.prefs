@@ -3,7 +3,12 @@ approved.defs.file.last.changed.time=1567206552000
 configurationInstallLocation=/C\:/Users/trossos/eclipse/java-photon/eclipse/
 eclipse.preferences.version=1
 iconcolormode=primary
+<<<<<<< HEAD
 last.download.attempt.time=1578671803387
 lastConfiguration=1578671772343
+=======
+last.download.attempt.time=1576517483932
+lastConfiguration=1578405690578
+>>>>>>> 4d8e8c84... test
 newinstall=true
 workbench.theme=Dark Gray

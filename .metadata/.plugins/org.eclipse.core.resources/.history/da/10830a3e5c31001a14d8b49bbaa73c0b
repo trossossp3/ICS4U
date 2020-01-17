@@ -1,0 +1,33 @@
+package com.bayviewglen.assignment;
+
+public class zigZag {
+
+	public int zigZag(int[] seq) {
+		int n = seq.length;
+		/**
+		 * 2d array where zz(i,0) is longest sequence ending at i with last element
+		 * being less then second last zz(i,1) is longest sequecne ending at i with last
+		 * element being greater then second last
+		 */
+		int[][] zz = new int[n][2];
+
+		zz[0][1] = 1;
+		zz[0][0] = 1;
+
+		int sol = 1;
+
+		for (int i = 1; i < n; i++) {
+			for (int j = i - 1; j > -1; j--) {
+
+				if (seq[j] < seq[i]) {
+					zz[i][1] = Math.max(zz[j][0]+1, zz[i][1]);
+				}
+				if (seq[j] > seq[i]) {
+					zz[i][0] = Math.max(zz[j][1]+1, zz[i][0]);
+				}
+				sol = Math.max(sol, Math.max(zz[i][0],zz[i][1]));
+			}
+			return sol;
+		}
+	}
+}
