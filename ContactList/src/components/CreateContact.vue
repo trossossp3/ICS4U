@@ -1,5 +1,5 @@
-// CreateComponent.vue
 
+//CreateComponenet.vue
 <template>
   <div>
     <h1>Create A Post</h1>

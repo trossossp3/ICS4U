@@ -3,9 +3,9 @@
 import Vue from 'vue'
 import App from './App.vue'
 import 'bootstrap/dist/css/bootstrap.min.css'
-import "quasar-framework/dist/umd/quasar.mat.css";
+import './quasar'
 
-Vue.use(Quasar);
+
 
 import VueRouter from 'vue-router';
 Vue.use(VueRouter);
@@ -16,6 +16,8 @@ import HomeContact from './components/HomeContact.vue';
 import CreateContact from './components/CreateContact.vue';
 import IndexContact from './components/IndexContact.vue';
 import EditContact from './components/EditContact.vue';
+import ListContacts from './components/ListContacts.vue'; 
+import './quasar'
 
 const routes = [
   {
@@ -34,10 +36,15 @@ const routes = [
       contact: IndexContact
   },
   {
-      name: 'edit',
-      path: '/edit/:id',
-      contact: EditContact
-  }
+      name: 'list',
+      path: '/list',
+      contact: ListContacts
+  },
+  {
+    name: 'edit',
+    path: '/edit/:id',
+    contact: EditContact
+}
 ];
 
 const router = new VueRouter({ mode: 'history', routes: routes});
