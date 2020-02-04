@@ -3,37 +3,40 @@
 import Vue from 'vue'
 import App from './App.vue'
 import 'bootstrap/dist/css/bootstrap.min.css'
+import "quasar-framework/dist/umd/quasar.mat.css";
+
+Vue.use(Quasar);
 
 import VueRouter from 'vue-router';
 Vue.use(VueRouter);
 
 Vue.config.productionTip = false;
 
-import HomeComponent from './components/HomeComponent.vue';
-import CreateComponent from './components/CreateComponent.vue';
-import IndexComponent from './components/IndexComponent.vue';
-import EditComponent from './components/EditComponent.vue';
+import HomeContact from './components/HomeContact.vue';
+import CreateContact from './components/CreateContact.vue';
+import IndexContact from './components/IndexContact.vue';
+import EditContact from './components/EditContact.vue';
 
 const routes = [
   {
       name: 'home',
       path: '/',
-      component: HomeComponent
+      contact: HomeContact
   },
   {
       name: 'create',
       path: '/create',
-      component: CreateComponent
+      contact: CreateContact
   },
   {
       name: 'posts',
       path: '/posts',
-      component: IndexComponent
+      contact: IndexContact
   },
   {
       name: 'edit',
       path: '/edit/:id',
-      component: EditComponent
+      contact: EditContact
   }
 ];
 
