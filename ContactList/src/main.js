@@ -9,41 +9,51 @@ import './quasar'
 
 import VueRouter from 'vue-router';
 Vue.use(VueRouter);
+import VueAxios from 'vue-axios';
+import axios from 'axios';
 
+Vue.use(VueAxios, axios);
+
+Vue.config.productionTip = false;
 Vue.config.productionTip = false;
 
 import HomeContact from './components/HomeContact.vue';
 import CreateContact from './components/CreateContact.vue';
 import IndexContact from './components/IndexContact.vue';
 import EditContact from './components/EditContact.vue';
-import ListContacts from './components/ListContacts.vue'; 
+//import ListContacts from './components/ListContacts.vue'; 
 import './quasar'
+import Buefy from 'buefy';
+import 'buefy/dist/buefy.css';
+
+Vue.use(Buefy);
 
 const routes = [
   {
       name: 'home',
       path: '/',
-      contact: HomeContact
+      component: HomeContact
   },
   {
       name: 'create',
       path: '/create',
-      contact: CreateContact
+      component: CreateContact
   },
   {
       name: 'posts',
       path: '/posts',
-      contact: IndexContact
+      component: IndexContact
   },
   {
       name: 'list',
       path: '/list',
-      contact: ListContacts
+      component: IndexContact
+      
   },
   {
     name: 'edit',
     path: '/edit/:id',
-    contact: EditContact
+    component: EditContact
 }
 ];
 

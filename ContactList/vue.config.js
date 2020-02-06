@@ -1,4 +1,5 @@
 module.exports = {
+  lintOnSave : false,
   pluginOptions: {
     quasar: {
       importStrategy: 'kebab',

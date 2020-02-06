@@ -5,17 +5,24 @@ const Schema = mongoose.Schema;
 
 // Define collection and schema for Post
 let Post = new Schema({
-    title: {
+    fName: {
         type: String
     },
-    body: {
+    lName: {
         type: String
     },
-
-    author: {
+    phone: {
         type: String
+    },
+    address:{
+        type:String
+    },
+    email:{
+        type:String
     }
-}, {
+}, 
+
+{
 
     collection: 'posts'
 });
