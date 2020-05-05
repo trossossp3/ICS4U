@@ -61,7 +61,7 @@ const fetch = require("node-fetch");
 //     new Box(10,0,10),
 //     new Box(10,0,10),
 // ]
-// const cubes = boxes.filter(box => box.length===box.width && box.width===box.length);
+// const cubes = boxes.filter(box => box.length===box.width && box.width===box.depth);
 // console.log(cubes)
 const promise0 = 10;
 const promise = fetch("https://jsonplaceholder.typicode.com/users")
