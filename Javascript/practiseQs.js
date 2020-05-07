@@ -16,53 +16,53 @@ const fetch = require("node-fetch");
 // // const gradeAvg = students.reduce((total,student)=>total+student.grade,0)/students.length;
 // // console.log(sumAge);
 
-// class Rectangle{
-//     constructor(length, width){
-//         this.length = length;
-//         this.width = width;
-//     }
+class Rectangle{
+    constructor(length, width){
+        this.length = length;
+        this.width = width;
+    }
 
-//     getPerimeter(){
-//         return this.length*2+this.width*2;
-//     }
-//     getArea(){
-//         return this.length*this.width;
-//     }
-// }
+    getPerimeter(){
+        return this.length*2+this.width*2;
+    }
+    getArea(){
+        return this.length*this.width;
+    }
+}
 
-// const rec = new Rectangle(10,10);
-// console.log(rec.getArea());
-// console.log(rec.getPerimeter());
+const rec = new Rectangle(10,10);
+console.log(rec.getArea());
+console.log(rec.getPerimeter());
 
-// class Box extends Rectangle{
-//     constructor(length,width,depth){
-//         super(length,width);
-//         this.depth = depth;
-//     }
-//     getVolume(){
-//         return this.getArea()*this.depth;
-//     }
-//     getSurfaceArea(){
-//         return 2 * (this.width*this.length+this.width*this.depth+this.length*this.depth);
-//     }
-// }
-// const box = new Box(10,10,10);
-// console.log(box.getSurfaceArea());
+class Box extends Rectangle{
+    constructor(length,width,depth){
+        super(length,width);
+        this.depth = depth;
+    }
+    getVolume(){
+        return this.getArea()*this.depth;
+    }
+    getSurfaceArea(){
+        return 2 * (this.width*this.length+this.width*this.depth+this.length*this.depth);
+    }
+}
+const box = new Box(10,10,10);
+console.log(box.getSurfaceArea());
 
-// const boxes = [
-//     new Box(10,10,10),
-//     new Box(10,1,10),
-//     new Box(10,10,10),
-//     new Box(10,0,10),
-//     new Box(10,0,10),
-//     new Box(10,0,10),
-//     new Box(10,0,10),
-//     new Box(10,0,10),
-//     new Box(10,0,10),
-//     new Box(10,0,10),
-// ]
-// const cubes = boxes.filter(box => box.length===box.width && box.width===box.depth);
-// console.log(cubes)
+const boxes = [
+    new Box(10,10,10),
+    new Box(10,1,10),
+    new Box(10,10,10),
+    new Box(10,0,10),
+    new Box(10,0,10),
+    new Box(10,0,10),
+    new Box(10,0,10),
+    new Box(10,0,10),
+    new Box(10,0,10),
+    new Box(10,0,10),
+]
+const cubes = boxes.filter(box => box.length===box.width && box.width===box.depth);
+console.log(cubes)
 const promise0 = 10;
 const promise = fetch("https://jsonplaceholder.typicode.com/users")
   .then((res) => res.json())
